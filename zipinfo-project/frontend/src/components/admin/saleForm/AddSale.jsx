@@ -234,13 +234,8 @@ const AddSale = () => {
 
       if (!result) throw new Error("주소에 해당하는 위치가 없습니다.");
 
-      console.log("Kakao API 응답 result:", result); // ✅ 이 위치에서 출력해야 함
-
       // region_3depth_h_code 추출 (address 또는 road_address 중에서)
       const regionHCode = result.address?.h_code || result.road_address?.h_code;
-
-      console.log("Kakao API 응답 result:", result);
-      console.log("추출된 region_3depth_h_code:", regionHCode);
 
       if (!regionHCode || regionHCode.length < 5) {
         throw new Error(
@@ -250,8 +245,6 @@ const AddSale = () => {
 
       // 앞 5자리만 추출
       const regionNo = parseInt(regionHCode.substring(0, 5), 10);
-
-      console.log("regionNo (앞 5자리):", regionNo);
 
       // 위도, 경도
       const lat = result.y;
