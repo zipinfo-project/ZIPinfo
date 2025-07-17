@@ -38,7 +38,7 @@ axiosAPI.interceptors.request.use((config) => {
     try {
       const { exp } = jwtDecode(token);
       if (exp * 1000 < Date.now()) {
-        window.dispatchEvent(new CustomEvent("forceLogout")); //강제 로그아웃 이벤트함수를 수행시켜 발생시킨다.
+        window.dispatchEvent(new CustomEvent("forceLogout"));
         delete config.headers.Authorization;
 
         return config;
