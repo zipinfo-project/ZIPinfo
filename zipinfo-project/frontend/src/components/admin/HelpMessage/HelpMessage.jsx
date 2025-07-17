@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../../../css/admin/HelpMessage/HelpMessage.module.css";
 import { MemberContext } from "./../../member/MemberContext";
-import { axiosAPI } from "../../../api/axiosApi";
+import { axiosAPI } from "../../../api/axiosAPI";
+import { RefreshCw } from "lucide-react";
 
 const HelpMessage = () => {
   const [activeTab, setActiveTab] = useState("received");
@@ -128,7 +129,11 @@ const HelpMessage = () => {
           disabled={refreshing}
           aria-label="새로고침"
         >
-          {refreshing ? "⏳" : "↻"}
+          <RefreshCw
+            size={18}
+            className={refreshing ? styles.refreshingIcon : undefined}
+            style={refreshing ? { animation: "spin 1s linear infinite" } : {}}
+          />
         </button>
       </div>
 

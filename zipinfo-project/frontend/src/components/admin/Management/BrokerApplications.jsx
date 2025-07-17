@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import "../../../css/admin/Management/BrokerApplications.css";
 import { toast } from "react-toastify";
-import { axiosAPI } from "../../../api/axiosApi";
+import { axiosAPI } from "../../../api/axiosAPI";
 
 const roleOptions = ["일반회원", "중개인 신청", "중개인"];
 
@@ -156,6 +156,11 @@ const BrokerApplications = () => {
           : app
       );
       setApplications(updated);
+
+      // "중개인"으로 변경 시 알림
+      if (newRoleStr === "중개인") {
+        toast.success("중개인으로 권한이 변경되었습니다!");
+      }
     } catch (error) {
       toast.error("회원 권한 변경에 실패하였습니다.");
     }
@@ -177,6 +182,9 @@ const BrokerApplications = () => {
           : app
       );
       setApplications(updated);
+
+      // 여기서 안내 메시지 추가!
+      toast.success("중개인 신청이 거절되었습니다.");
     } catch (error) {
       toast.error("거절 처리 실패. 다시 한번 시도해주세요.");
     }

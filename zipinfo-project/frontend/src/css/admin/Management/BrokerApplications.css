@@ -30,3 +30,51 @@
 .reject-label.text-disabled {
   color: #9ca3af;
 }
+
+/* 드롭다운(권한 선택) 스타일 */
+.member-role-select {
+  padding: 8px 14px;
+  font-size: 15px;
+  border-radius: 20px;
+  border: 1px solid #d1d5db;
+  background-color: white;
+  color: #111827;
+  cursor: pointer;
+  min-width: 120px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.member-role-select:focus {
+  border-color: #3b82f6;
+  outline: none;
+}
+
+/* 중개사 정보 확인 버튼 스타일 */
+.broker-check-button,
+.broker-refresh-button,
+.broker-retry-button {
+  background-color: #f3f4f6;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: background-color 0.2s, color 0.2s;
+}
+.broker-check-button:hover,
+.broker-refresh-button:hover,
+.broker-retry-button:hover {
+  background-color: #e5e7eb;
+  color: #1d4ed8;
+}
+.broker-check-button:disabled,
+.broker-refresh-button:disabled,
+.broker-retry-button:disabled {
+  background-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
