@@ -27,7 +27,7 @@ axiosAPI.interceptors.request.use((config) => {
     return config;
   }
 
-  //  로그인 요청은 토큰 체크 없이 바로 보내기. 토큰이 없는상태에서 로그인요청을 보내는데 토큰이 없다고 거절하면 안되니까!
+  //  로그인 요청은 토큰 체크 없이 바로 보내기. 토큰이 없는상태에서 로그인요청을 보내는데 토큰이 없다고 거절하면 안되니까!!
   if (config.url?.includes("/login")) {
     return config;
   }
