@@ -81,7 +81,7 @@ const Advertisement = () => {
       formData.append("file", selectedFile);
 
       const response = await axiosAPI.post(
-        "/advertisement/register",
+        "http://localhost:8080/advertisement/register",
         formData,
         { withCredentials: true }
       );
@@ -111,7 +111,7 @@ const Advertisement = () => {
   // ✅ 광고 메인 등록/해제 토글
   const handleToggleMain = async (adNo) => {
     const response = await axiosAPI.post(
-      "/advertisement/updateMain",
+      "http://localhost:8080/advertisement/updateMain",
       { adNo: parseInt(adNo) },
       { withCredentials: true }
     );
@@ -122,7 +122,7 @@ const Advertisement = () => {
   // ✅ 광고 삭제 (클라이언트 상태에서만 삭제)
   const handleDelete = async (adNo) => {
     const response = await axiosAPI.post(
-      "/advertisement/delete",
+      "http://localhost:8080/advertisement/delete",
       { adNo: parseInt(adNo) },
       { withCredentials: true }
     );
@@ -177,7 +177,7 @@ const Advertisement = () => {
                 <td>{index + 1}</td>
                 <td>
                   <img
-                    src={`${import.meta.env.VITE_API_BASE_URL}${ad.adImgUrl}`}
+                    src={`http://localhost:8080${ad.adImgUrl}`} // ✅ 절대 경로로 변경
                     alt={`광고 이미지 ${index + 1}`}
                     style={{ width: "100px", height: "auto" }}
                   />

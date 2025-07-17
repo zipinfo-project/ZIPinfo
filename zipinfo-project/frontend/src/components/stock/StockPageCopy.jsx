@@ -506,7 +506,7 @@ const StockPageCopy = () => {
             <div class="tip-form-title">${formLabel[f]}</div>
             <div class="tip-line">
               ${stockTypeLabel[currentType]}&nbsp;
-              <strong>${priceConvertToString(val)}${
+              <strong class="tip-price">${priceConvertToString(val)}${
                 currentType === 2 && month
                   ? `/${priceConvertToString(month)}`
                   : ""

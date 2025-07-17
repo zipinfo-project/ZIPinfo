@@ -522,13 +522,17 @@
   margin-top: 6px;
 }
 .tip-form-title {
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: 2px;
-  color: #374;
+  color: #767676;
 }
 .tip-line {
-  font-weight: 700;
+  font-weight: 600;
   color: #495cf8;
+}
+.tip-price {
+  font-weight: 600;
+  color: #111;
 }
 .tip-empty {
   font-size: 12px;

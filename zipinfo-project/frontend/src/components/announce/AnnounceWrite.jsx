@@ -24,7 +24,7 @@ export default function AnnounceWrite() {
     if (!html) return html;
     return html.replace(
       /src="\/images\/announceImg\//g,
-      `src="${import.meta.env.VITE_API_BASE_URL}/images/announceImg/`
+      'src="http://localhost:8080/images/announceImg/'
     );
   };
 
@@ -61,16 +61,20 @@ export default function AnnounceWrite() {
       };
 
       if (isEditMode) {
-        await axiosAPI.put(`/api/announce/edit/${id}`, payload, {
-          withCredentials: true,
-        });
+        await axiosAPI.put(
+          `http://localhost:8080/api/announce/edit/${id}`,
+          payload,
+          { withCredentials: true }
+        );
         toast.success("공지사항이 수정되었습니다.");
       } else {
-        await axiosAPI.post("/api/announce/write", payload, {
-          withCredentials: true,
-        });
+        await axiosAPI.post(
+          "http://localhost:8080/api/announce/write",
+          payload,
+          { withCredentials: true }
+        );
         toast.success("공지사항이 등록되었습니다.");
-        await axiosAPI.post("/announce");
+        await axiosAPI.post("http://localhost:8080/announce");
       }
 
       navigate("/announce");

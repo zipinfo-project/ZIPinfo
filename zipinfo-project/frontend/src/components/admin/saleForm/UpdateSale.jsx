@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { axiosAPI } from "../../../api/axiosApi";
+import { axiosAPI } from "../../../api/axiosAPI";
 import "../../../css/admin/saleForm/UpdateSale.css";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -69,9 +69,12 @@ const UpdateSale = () => {
     const fetchSaleData = async () => {
       try {
         setLoading(true);
-        const response = await axiosAPI.get(`/admin/updateSale/${id}`, {
-          withCredentials: true,
-        });
+        const response = await axiosAPI.get(
+          `http://localhost:8080/admin/updateSale/${id}`,
+          {
+            withCredentials: true,
+          }
+        );
 
         if (response.status === 200) {
           const saleData = response.data;
