@@ -152,7 +152,7 @@ const InfraMark = () => {
     clickedCategoryRef.current = clickedCategory;
     isInfraCategoryVisibleRef.current = isInfraCategoryVisible;
   }, [clickedCategory, isInfraCategoryVisible]);
-
+  const [isLoadingMarkers, setIsLoadingMarkers] = useState(false);
   /*kakaoMap addEventListener로 맵을 옮길때, 맵을 zoom 할때 동작들을 설정*/
   useEffect(() => {
     if (mapReady) {
@@ -178,6 +178,7 @@ const InfraMark = () => {
                 });
               }
             });
+
             itemMarkersRef.current.map((itemMarker) => {
               itemMarker.setMap(mapInstanceRef.current);
             });
