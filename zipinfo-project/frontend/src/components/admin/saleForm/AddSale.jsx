@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { axiosAPI } from "../../../api/axiosAPI";
-import "../../../css/admin/saleForm/addSale.css";
+import "../../../css/admin/saleForm/AddSale.css";
 import { useNavigate } from "react-router-dom";
 
 // 매물 형태 및 상태를 숫자로 매핑

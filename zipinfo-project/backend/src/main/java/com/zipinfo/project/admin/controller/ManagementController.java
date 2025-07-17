@@ -224,6 +224,7 @@ public class ManagementController {
             if (brokerNo != null) {
                 Map<String, Object> response = new HashMap<>();
                 response.put("brokerNo", brokerNo);
+                System.out.println(response);
                 return ResponseEntity.ok(response);
             } else {
                 // 중개사번호가 없는 경우

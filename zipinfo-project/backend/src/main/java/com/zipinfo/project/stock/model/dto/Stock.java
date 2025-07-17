@@ -49,4 +49,7 @@ public class Stock {
     private String presidentName;//대표명
     private String brokerNo; // 중개등록번호
     private String presidentPhone; // 대표번호
+
+    private String sellDate; // 판매날짜
+
 }

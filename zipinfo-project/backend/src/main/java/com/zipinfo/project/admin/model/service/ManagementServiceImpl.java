@@ -226,6 +226,8 @@ public class ManagementServiceImpl implements ManagementService {
 			managementMapper.deleteMemberBoards(memberNo);
 			managementMapper.deleteMemberTokenInfo(memberNo);
 			managementMapper.deleteMemberBrokerInfo(memberNo);
+			managementMapper.deleteMemberMessageFiles(memberNo); // ★ 파일 먼저 삭제
+			managementMapper.deleteMemberHelpMessage(memberNo);  // 메시지 삭제
 			return managementMapper.permanentlyDeleteMember(memberNo);
 		} catch (Exception e) {
 			log.error("회원 영구 삭제 중 오류 발생: memberNo={}, error={}", memberNo, e.getMessage(), e);

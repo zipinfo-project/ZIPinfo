@@ -130,8 +130,8 @@ public class StockController {
 	 */
 	@GetMapping("detail")
 	public ResponseEntity<?> selectStockDetail(@RequestParam("stockNo") int stockNo) {
-	    try {
-	    	
+//	    try {
+	    	System.out.println("응애");
 	        Stock stockDetail = service.selectStockDetail(stockNo);
 	        if (stockDetail != null) {
 	            return ResponseEntity.ok(stockDetail);
@@ -140,10 +140,10 @@ public class StockController {
 	            return ResponseEntity.notFound().build();
 	        }
 	        
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	    }
+//	    } catch (Exception e) {
+//	        e.printStackTrace();
+//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//	    }
 	}
 	
 

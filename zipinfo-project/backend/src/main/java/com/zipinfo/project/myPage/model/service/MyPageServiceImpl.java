@@ -125,7 +125,10 @@ public class MyPageServiceImpl implements MyPageService{
 	
 	@Override
 	public int addStock(Stock stock) {
-	    return mapper.addStock(stock);
+		int addResult = mapper.addStock(stock);
+		int addSellDate = mapper.addSellDate(stock);
+		
+	    return addResult+addSellDate;
 	}
 	
 	@Override
@@ -383,14 +386,17 @@ public class MyPageServiceImpl implements MyPageService{
 	@Override
 	public int updateSellYn(Stock stock) {
 		int result;
+		int dateResult;
 		
 		if(stock.getSellYn().equals("Y")) {
 			result = mapper.updateSellY(stock);
+			dateResult = mapper.updateSellDate(stock);
 		}else {
 			result = mapper.updateSellN(stock);
+			dateResult = mapper.updateSellDateNull(stock);
 		}
 		
-		return result;
+		return result+dateResult;
 	}
 	
 

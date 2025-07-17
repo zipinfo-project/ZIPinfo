@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../../css/myPage/MyStock.css";
+import "../../css/myPage/myStock.css";
 import StockMenu from "./StockMenu";
 import MiniMenu from "./MiniMenu";
 import { axiosAPI } from "../../api/axiosAPI";
@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function MyStock() {
   const [properties, setProperties] = useState([]);
-
+  // 슈밤!!!!!
   const nav = useNavigate();
 
   const [loading, setLoading] = useState(true);

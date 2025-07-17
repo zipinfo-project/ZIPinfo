@@ -261,7 +261,6 @@
 .stock-sell-yn.sold {
   display: flex;
   justify-content: center;
-  align-items: center;
   width: 56px;
   height: 20px;
   border: 1px solid #495cf8;
