@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react"; // useRef 추가
-import { axiosAPI } from "../../api/axiosApi";
+import { axiosAPI } from "../../api/axiosAPI";
 import "../../css/stock/StockPage.css";
 import SearchBar from "../common/SearchBar";
 import agent from "../../assets/agent-icon.svg"; // 중개사 아이콘
