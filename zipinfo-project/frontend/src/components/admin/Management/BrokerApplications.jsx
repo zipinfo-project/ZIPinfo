@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import "../../../css/admin/Management/BrokerApplications.css";
 import { toast } from "react-toastify";
-import { axiosAPI } from "../../../api/axiosAPI";
+import { axiosAPI } from "../../../api/axiosApi";
 
 const roleOptions = ["일반회원", "중개인 신청", "중개인"];
 
@@ -156,8 +156,6 @@ const BrokerApplications = () => {
           : app
       );
       setApplications(updated);
-
-      // "중개인"으로 변경 시 알림
       if (newRoleStr === "중개인") {
         toast.success("중개인으로 권한이 변경되었습니다!");
       }
@@ -182,8 +180,6 @@ const BrokerApplications = () => {
           : app
       );
       setApplications(updated);
-
-      // 여기서 안내 메시지 추가!
       toast.success("중개인 신청이 거절되었습니다.");
     } catch (error) {
       toast.error("거절 처리 실패. 다시 한번 시도해주세요.");
@@ -325,8 +321,6 @@ const BrokerApplications = () => {
               <th>이메일</th>
               <th>회원 가입일</th>
               <th>회원 권한</th>
-              <th>최근 접속일</th>
-              <th>중개사정보</th>
               <th>관리</th>
             </tr>
           </thead>
@@ -354,33 +348,31 @@ const BrokerApplications = () => {
                       ))}
                     </select>
                   </td>
-                  <td>{formatDate(app.lastLoginDate)}</td>
-                  <td className="broker-info-cell">
-                    {renderBrokerInfo(app.memberNumber, app.memberId)}
-                  </td>
                   <td>
-                    <button
-                      onClick={() => handleReject(app.memberNumber)}
-                      disabled={app.applicationStatus === "거절됨"}
-                      className={`reject-button ${
-                        app.applicationStatus === "거절됨"
-                          ? "rejected"
-                          : "active"
-                      }`}
-                    >
-                      <XCircle size={18} color="red" strokeWidth={2} />
-                      <span
-                        className={`reject-label ${
+                    <div className="admin-table-broker">
+                      <button
+                        onClick={() => handleReject(app.memberNumber)}
+                        disabled={app.applicationStatus === "거절됨"}
+                        className={`reject-button ${
                           app.applicationStatus === "거절됨"
-                            ? "text-disabled"
-                            : "text-active"
+                            ? "rejected"
+                            : "active"
                         }`}
                       >
-                        {app.applicationStatus === "거절됨"
-                          ? "거절됨"
-                          : "권한신청 거절"}
-                      </span>
-                    </button>
+                        <XCircle size={18} color="red" strokeWidth={2} />
+                        <span
+                          className={`reject-label ${
+                            app.applicationStatus === "거절됨"
+                              ? "text-disabled"
+                              : "text-active"
+                          }`}
+                        >
+                          {app.applicationStatus === "거절됨"
+                            ? "거절됨"
+                            : "권한신청 거절"}
+                        </span>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))

@@ -126,7 +126,9 @@ public class MyPageServiceImpl implements MyPageService{
 	@Override
 	public int addStock(Stock stock) {
 		int addResult = mapper.addStock(stock);
-		int addSellDate = mapper.addSellDate(stock);
+		int stockNo = stock.getStockNo();
+		
+		int addSellDate = mapper.addSellDate(stockNo);
 		
 	    return addResult+addSellDate;
 	}
@@ -195,6 +197,11 @@ public class MyPageServiceImpl implements MyPageService{
 	
 	@Override
 	public int deleteStockInfo(int stockNo) {
+		mapper.deleteStockCoord(stockNo);
+		mapper.deleteSellDate(stockNo);
+		mapper.deleteStockImgs(stockNo);
+		mapper.deleteLikeStock(stockNo);
+		mapper.deleteStockSaw(stockNo);
 		return mapper.deleteStockInfo(stockNo);
 	}
 	

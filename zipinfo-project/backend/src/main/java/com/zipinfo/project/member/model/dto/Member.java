@@ -47,7 +47,7 @@ public class Member implements UserDetails {
 	private String companyAddress;
 	private String companyDetailAddress;
 
-	private LocalDate memberWithdrawDate;
+	private String memberWithdrawDate;
 
 	public String getRole() {
 		return switch (this.memberAuth) {

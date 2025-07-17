@@ -101,7 +101,7 @@
 		WHERE MEMBER_NO = #{memberNo}
 	</update>
 	
-	<insert id="addStock">
+	<insert id="addStock" parameterType="com.zipinfo.project.stock.model.dto.Stock" useGeneratedKeys="true" keyProperty="stockNo" keyColumn="STOCK_NO">
 		INSERT INTO "STOCK_INFO"
 		VALUES(SEQ_STOCK_INFO.NEXTVAL, #{memberNo}, #{stockName}, #{stockSellPrice}, #{stockManageFee}
 		, #{stockFeeMonth}, #{stockInfo}, #{stockType}, #{stockForm}, #{exclusiveArea}, #{supplyArea}
@@ -144,6 +144,31 @@
 	
 	<delete id="deleteStockInfo">
 		DELETE "STOCK_INFO"
+		WHERE STOCK_NO = #{stockNo}
+	</delete>
+	
+	<delete id="deleteStockCoord">
+		DELETE "STOCK_COORD"
+		WHERE STOCK_NO = #{stockNo}
+	</delete>
+	
+	<delete id="deleteSellDate">
+		DELETE "SELL_DATE"
+		WHERE STOCK_NO = #{stockNo}
+	</delete>
+	
+	<delete id="deleteStockImgs">
+		DELETE "STOCK_IMG"
+		WHERE STOCK_NO = #{stockNo}
+	</delete>
+	
+	<delete id="deleteLikeStock">
+		DELETE "LIKE_STOCK"
+		WHERE STOCK_NO = #{stockNo}
+	</delete>
+	
+	<delete id="deleteStockSaw">
+		DELETE "STOCK_SAW"
 		WHERE STOCK_NO = #{stockNo}
 	</delete>
 	

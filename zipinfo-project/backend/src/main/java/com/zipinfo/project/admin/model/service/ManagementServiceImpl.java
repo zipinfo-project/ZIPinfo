@@ -204,6 +204,8 @@ public class ManagementServiceImpl implements ManagementService {
 	@Override
 	public int permanentlyDeleteBoard(Long boardNo) {
 		try {
+			managementMapper.deleteBoardLike(boardNo);
+			managementMapper.deleteComment(boardNo);
 			return managementMapper.permanentlyDeleteBoard(boardNo);
 		} catch (Exception e) {
 			log.error("게시글 영구 삭제 중 오류 발생: boardNo={}, error={}", boardNo, e.getMessage(), e);
@@ -220,14 +222,25 @@ public class ManagementServiceImpl implements ManagementService {
 	@Override
 	public int permanentlyDeleteMember(Long memberNo) {
 		try {
+			List<Integer> stockNoList = managementMapper.selectStockNo(memberNo);
+			
+			for(int stockNo : stockNoList) {
+				managementMapper.deleteStockSellDate(stockNo);  
+				managementMapper.deleteStockCoord(stockNo);  
+				managementMapper.deleteStockImg(stockNo);  
+			}
+			
 			managementMapper.deleteMemberStockSaw(memberNo);
 			managementMapper.deleteMemberLikes(memberNo);
 			managementMapper.deleteMemberComments(memberNo);
+			managementMapper.deleteCommentLike(memberNo);
 			managementMapper.deleteMemberBoards(memberNo);
 			managementMapper.deleteMemberTokenInfo(memberNo);
 			managementMapper.deleteMemberBrokerInfo(memberNo);
 			managementMapper.deleteMemberMessageFiles(memberNo); // ★ 파일 먼저 삭제
 			managementMapper.deleteMemberHelpMessage(memberNo);  // 메시지 삭제
+			managementMapper.deleteLikeStock(memberNo);  
+			managementMapper.deleteMemberStockInfo(memberNo);  
 			return managementMapper.permanentlyDeleteMember(memberNo);
 		} catch (Exception e) {
 			log.error("회원 영구 삭제 중 오류 발생: memberNo={}, error={}", memberNo, e.getMessage(), e);
