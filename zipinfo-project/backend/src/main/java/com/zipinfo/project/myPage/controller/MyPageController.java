@@ -245,7 +245,7 @@ public class MyPageController {
 	
 	@PostMapping("deleteStockInfo")
 	public ResponseEntity<Object> deleteStockInfo(@RequestBody Stock stock){
-		try {
+//		try {
 			
 			int stockNo = stock.getStockNo();
 			
@@ -253,10 +253,10 @@ public class MyPageController {
 			
 			return ResponseEntity.status(HttpStatus.OK) // 200
 					.body(result); 
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("불러오는 중 예외 발생 : " + e.getMessage());
-		}
+//		} catch (Exception e) {
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//					.body("불러오는 중 예외 발생 : " + e.getMessage());
+//		}
 	}
 	
 	@PostMapping("updateStock")
@@ -538,7 +538,7 @@ public class MyPageController {
 	
 	@PostMapping("searchResult")
 	public ResponseEntity<Object> searchResult(@RequestBody String value){
-//		try {
+		try {
 			
 			Map<String, Object> result = service.searchResult(value);
 			
@@ -546,11 +546,11 @@ public class MyPageController {
 			
 			return ResponseEntity.status(HttpStatus.OK).body(result);
 			
-//			
-//		} catch (Exception e) {
-//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//					.body("불러오는 중 예외 발생 : " + e.getMessage());
-//		}
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("불러오는 중 예외 발생 : " + e.getMessage());
+		}
 	}
 	
 }

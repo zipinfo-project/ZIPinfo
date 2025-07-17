@@ -30,3 +30,9 @@
 .reject-label.text-disabled {
   color: #9ca3af;
 }
+
+.admin-table-broker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

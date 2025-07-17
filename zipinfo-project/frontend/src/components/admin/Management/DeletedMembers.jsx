@@ -40,6 +40,7 @@ const DeletedMembers = () => {
 
   useEffect(() => {
     setFilteredDeletedMembers(deletedMembers);
+    console.log(deletedMembers);
   }, [deletedMembers]);
 
   useEffect(() => {
@@ -191,7 +192,7 @@ const DeletedMembers = () => {
               <th>아이디</th>
               <th>가입일</th>
               <th>회원 권한</th>
-              <th>최근 접속일</th>
+              <th>탈퇴일</th>
               <th>올린 글 개수</th>
               <th>계정 복구</th>
               <th>계정 삭제</th>
@@ -209,15 +210,11 @@ const DeletedMembers = () => {
                 <tr key={member.memberNo}>
                   <td>{member.memberNo}</td>
                   <td>{member.memberEmail || member.memberId}</td>
-                  <td>{member.enrollDate || member.joinDate || "-"}</td>
+                  <td>{member.enrollDate ? member.enrollDate : "-"}</td>
                   <td>
                     {authMap[member.memberRole ?? member.memberAuth] || "-"}
                   </td>
-                  <td>
-                    {member.lastLoginDate
-                      ? new Date(member.lastLoginDate).toLocaleDateString()
-                      : "-"}
-                  </td>
+                  <td>{member.memberWithdrawDate}</td>
                   <td>{member.postCount ?? member.POST_COUNT ?? 0}</td>
                   <td>
                     <button

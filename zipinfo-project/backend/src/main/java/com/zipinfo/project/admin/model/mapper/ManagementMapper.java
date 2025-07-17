@@ -149,6 +149,27 @@ public interface ManagementMapper {
      */
     int deleteMemberMessageFiles(@Param("memberNo") Long memberNo);
 
+    /**
+     * 회원 관련 STOCK_INFO 데이터 삭제
+     */
 
 	String findBrokerNumberByEmail(@Param("memberEmail") String memberEmail);
+
+	int deleteCommentLike(Long memberNo);
+
+	int deleteStockCoord(int stockNo);
+
+	int deleteStockSellDate(int stockNo);
+
+	int deleteStockImg(int stockNo);
+
+	int deleteLikeStock(Long memberNo);
+	
+	int deleteMemberStockInfo(Long memberNo);
+
+	List<Integer> selectStockNo(Long memberNo);
+
+	int deleteBoardLike(Long boardNo);
+
+	int deleteComment(Long boardNo);
 }

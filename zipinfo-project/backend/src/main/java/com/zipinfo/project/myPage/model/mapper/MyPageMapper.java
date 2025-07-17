@@ -124,11 +124,21 @@ public interface MyPageMapper {
 
 	List<Sale> searchSale(String value);
 
-	int addSellDate(Stock stock);
+	int addSellDate(int stockNo);
 
 	int updateSellDate(Stock stock);
 
 	int updateSellDateNull(Stock stock);
+
+	int deleteStockCoord(int stockNo);
+
+	int deleteSellDate(int stockNo);
+
+	int deleteStockImgs(int stockNo);
+
+	int deleteLikeStock(int stockNo);
+
+	int deleteStockSaw(int stockNo);
 
 
 }
