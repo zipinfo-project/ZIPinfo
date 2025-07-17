@@ -342,6 +342,18 @@
 		WHERE STOCK_NO = #{stockNo}
 	</update>
 	
+	<update id="updateSellDate">
+		UPDATE "SELL_DATE" SET
+		SELL_DATE = SYSDATE
+		WHERE STOCK_NO = #{stockNo}
+	</update>
+	
+	<update id="updateSellDateNull">
+		UPDATE "SELL_DATE" SET
+		SELL_DATE = NULL
+		WHERE STOCK_NO = #{stockNo}
+	</update>
+	
 	<select id="selectAuthMember">
 		SELECT MEMBER_NO FROM "MEMBER"
 		WHERE MEMBER_AUTH = 0
@@ -401,8 +413,8 @@
 		, s.STOCK_FORM, s.EXCLUSIVE_AREA, s.SUPPLY_AREA, s.CURRENT_FLOOR, s.FLOOR_TOTAL_COUNT,
 		s.ROOM_COUNT, s.BATH_COUNT, s.STOCK_DIRECTION, s.ABLE_DATE, s.USE_APPROVAL_DATE, s.REGIST_DATE,
 		s.STOCK_DETAIL, s.STOCK_ADDRESS, s.REGION_NO, s.SELL_YN, c.LAT, c.LNG 
-		FROM "STOCK_INFO" i
-		JOIN "STOCK_COORD" c ON(i.STOCK_NO = c.STOCK_NO)
+		FROM "STOCK_INFO" s
+		JOIN "STOCK_COORD" c ON(s.STOCK_NO = c.STOCK_NO)
 		WHERE REPLACE(STOCK_NAME, ' ', '') LIKE '%' || REPLACE(#{value}, ' ', '') || '%'
 		OR REPLACE(STOCK_ADDRESS, ' ', '') LIKE '%' || REPLACE(#{value}, ' ', '') || '%'
 	</select>
@@ -438,5 +450,10 @@
 		WHERE REPLACE(SALE_STOCK_NAME, ' ', '') LIKE '%' || REPLACE(#{value}, ' ', '') || '%'
 		OR REPLACE(SALE_ADDRESS, ' ', '') LIKE '%' || REPLACE(#{value}, ' ', '') || '%'
 	</select>
+	
+	<insert id="addSellDate">
+		INSERT INTO "SELL_DATE"
+		VALUES(#{stockNo}, NULL)
+	</insert>
 	
 </mapper>

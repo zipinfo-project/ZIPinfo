@@ -72,22 +72,25 @@
   justify-content: center;
   align-items: center;
   height: 120px;
+  width: 50vw;
 }
 
 .modal-img-wrapper {
   display: flex;
   gap: 10px; /* 썸네일 간격, margin 대신 gap 사용해도 OK */
   overflow-x: auto;
-  scroll-behavior: smooth; /* 휠·키보드도 부드럽게 */
-  scrollbar-width: none; /* Firefox */
-  justify-content: center;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
   align-items: center;
-  max-width: 50vw;
 }
 
 .modal-img {
   flex: 0 0 auto;
   margin-right: 10px;
+}
+
+.modal-img.is-active .slide-img-mini {
+  border: 2px solid #495cf8;
 }
 
 .modal-img :hover {
@@ -107,6 +110,6 @@
   margin-top: -200px;
 }
 
-/* .modal-img-wrapper::-webkit-scrollbar {
+.will-be-hidden {
   display: none;
-} */
+}

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import "../../css/stock/StockImgModal.css";
@@ -15,6 +15,8 @@ function StockImgModal({ item }) {
     if (idx === length - 1) {
       return;
     }
+    console.log(idx);
+    console.log(length);
     setIdx((idx + 1) % item.imgUrls.length);
   };
   const prev = () => {
@@ -55,6 +57,24 @@ function StockImgModal({ item }) {
       overflow: "visible",
     },
   };
+
+  useEffect(() => {
+    if (!open) return; // 모달 꺼져 있으면 건너뜀
+    const rail = railRef.current;
+    const tIdx = idx - 2; // 썸네일 배열 기준 인덱스
+    if (tIdx < 0 || !rail) return;
+
+    const thumb = rail.children[tIdx];
+    if (!thumb) return;
+
+    const target =
+      thumb.offsetLeft + thumb.offsetWidth / 2 - rail.clientWidth / 2;
+    const max = rail.scrollWidth - rail.clientWidth;
+    rail.scrollTo({
+      left: Math.max(0, Math.min(target, max)),
+      behavior: "smooth",
+    });
+  }, [idx, open]);
 
   return (
     <>
@@ -100,7 +120,10 @@ function StockImgModal({ item }) {
           <span>{length - 2}</span>
         </div>
         <div>
-          <button className="modal-nav left" onClick={prev}>
+          <button
+            className={`modal-nav ${idx === 2 ? "will-be-hidden" : ""} left`}
+            onClick={prev}
+          >
             <ChevronLeft size={40} />
           </button>
           <div className="slide-box">
@@ -120,20 +143,27 @@ function StockImgModal({ item }) {
             </div>
           </div>
 
-          <button className="modal-nav right" onClick={next}>
+          <button
+            className={`modal-nav ${
+              idx === length - 1 ? "will-be-hidden" : ""
+            } right`}
+            onClick={next}
+          >
             <ChevronRight size={40} />
           </button>
         </div>
         <div className="modal-img-list">
           <div ref={railRef} className="modal-img-wrapper">
             {item.imgUrls.slice(2).map((u, i) => (
-              <div className="modal-img">
+              <div
+                key={i}
+                onClick={() => go(i)}
+                className={`modal-img ${idx - 2 === i ? "is-active" : ""}`}
+              >
                 <img
-                  key={i}
                   className="slide-img-mini"
                   src={`http://localhost:8080${u}`}
                   alt={`매물 이미지 ${i + 1}`}
-                  onClick={() => go(i)}
                 />
               </div>
             ))}

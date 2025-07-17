@@ -56,7 +56,6 @@ ORDER BY TO_CHAR(REGIST_DATE, 'YYYY-MM-DD')
 		<result property="presidentName" column="PRESIDENT_NAME" />
 		<result property="brokerNo" column="BROKER_NO" />
 		<result property="presidentPhone" column="PRESIDENT_PHONE" />
-		<result property="sellDate" column="SELL_DATE"/>
 	</resultMap>
 	<resultMap id="coordsMap"
 		type="com.zipinfo.project.stock.model.dto.CoordsStatInfo">
@@ -100,7 +99,6 @@ ORDER BY TO_CHAR(REGIST_DATE, 'YYYY-MM-DD')
 		<result property="presidentPhone" column="PRESIDENT_PHONE" />
 		<result property="lat" column="LAT" />
 		<result property="lng" column="LNG" />
-		<result property="sellDate" column="SELL_DATE"/>
 
 		<collection property="imgUrls" ofType="string">
 			<result column="IMG_URL" />
@@ -153,12 +151,9 @@ ORDER BY TO_CHAR(REGIST_DATE, 'YYYY-MM-DD')
 		FROM BROKER_INFO
 		) b ON i.MEMBER_NO = b.MEMBER_NO
 		LEFT JOIN STOCK_IMG m ON i.STOCK_NO = m.STOCK_NO
-		LEFT JOIN SELL_DATE sell ON i.STOCK_NO = sell.STOCK_NO
-		WHERE 
-		(
-			sell.SELL_DATE > ( SYSDATE - 7)
-			OR sell.SELL_DATE IS NULL
-		)
+		LEFT JOIN SELL_DATE d ON d.STOCK_NO = i.STOCK_NO
+		WHERE ( d.SELL_DATE IS NULL       
+        OR SYSDATE - d.SELL_DATE &lt; 7 )
 		ORDER BY m.IMG_ORDER
 	</select>
 
@@ -279,12 +274,14 @@ ORDER BY TO_CHAR(REGIST_DATE, 'YYYY-MM-DD')
         b.PRESIDENT_PHONE,
         c.LAT,
         c.LNG,
-        s.IMG_URL                               
+        s.IMG_URL   
   FROM   STOCK_INFO   i
   JOIN   STOCK_COORD  c ON c.STOCK_NO = i.STOCK_NO
   JOIN   STOCK_IMG    s ON s.STOCK_NO = i.STOCK_NO
   JOIN   BROKER_INFO  b ON b.MEMBER_NO = i.MEMBER_NO
+  LEFT JOIN   SELL_DATE    d ON d.STOCK_NO = i.STOCK_NO
   WHERE  i.STOCK_NO = #{stockNo}
+  AND    (SYSDATE - d.SELL_DATE &lt; 7 OR d.SELL_DATE IS NULL)
 </select>
 
 </mapper>

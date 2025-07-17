@@ -264,6 +264,7 @@ const StockPageCopy = () => {
       const options = {
         center: new window.kakao.maps.LatLng(37.567937, 126.983001), // KH종로지원 대략적인 위도, 경도
         level: 6, // 지도의 확대 레벨
+        maxLevel: 11,
       };
       const map = new window.kakao.maps.Map(container, options);
       mapInstanceRef.current = map; // ✅ map 저장
@@ -271,8 +272,25 @@ const StockPageCopy = () => {
       kakao.maps.event.addListener(map, "zoom_start", clearTooltip);
       kakao.maps.event.addListener(map, "dragstart", clearTooltip);
 
+      const swLimit = new kakao.maps.LatLng(33.0, 124.5); // 남서
+      const neLimit = new kakao.maps.LatLng(43.0, 132.0); // 북동
+      const limit = new kakao.maps.LatLngBounds(swLimit, neLimit);
+
       //화면을 움직였을떄 서버에 itemList를 요청하는 addListener
       window.kakao.maps.event.addListener(map, "idle", async () => {
+        const c = map.getCenter();
+        if (!limit.contain(c)) {
+          const lat = Math.min(
+            Math.max(c.getLat(), swLimit.getLat()),
+            neLimit.getLat()
+          );
+          const lng = Math.min(
+            Math.max(c.getLng(), swLimit.getLng()),
+            neLimit.getLng()
+          );
+          map.panTo(new kakao.maps.LatLng(lat, lng));
+        }
+
         clearTooltip();
         const level = map.getLevel();
         const mode = calcMode(level);
@@ -316,6 +334,10 @@ const StockPageCopy = () => {
 
     getLikeStock();
   }, []);
+
+  useEffect(() => {
+    shouldFocusRef.current = !!location.state?.shouldFocus;
+  }, [location.state]);
 
   function renderByMode(mode) {
     // 일단 전부 지움
@@ -498,7 +520,7 @@ const StockPageCopy = () => {
       <div class="tip-title">
         ${getRegionName(c.code)}&nbsp;${stockTypeLabel[currentType]} 평균
       </div>
-      ${lines || "<div class='tip-empty'>데이터 없음</div>"}
+      ${lines || "<div class='tip-empty'>매물이 없습니다</div>"}
     `;
         };
 
@@ -652,13 +674,13 @@ const StockPageCopy = () => {
 
       // /********************end of 겹침처리****************************************************************** */
 
-      const content = `<div class=${
-        item.sellDate != null
-          ? "custom-overlay custom-overlay-sold "
-          : "custom-overlay"
+      const content = `
+      <div class=${
+        item.sellYn === "N" ? "custom-overlay" : "custom-overlay-sold"
       }>
-      
-        <div class="area">${item.exclusiveArea}㎡</div>
+        <div class=${item.sellYn === "N" ? "area" : "soldArea"}>${
+        item.exclusiveArea
+      }㎡</div>
         ${
           item.stockType === 0
             ? `<div class="label">
@@ -679,29 +701,52 @@ const StockPageCopy = () => {
       </div>
     `; // 커스텀 마커 저장
       //클릭 이벤트 리스너 바인딩을 위한 코드
+
       const customOverlay = document.createElement("div");
       customOverlay.innerHTML = content;
+      if (item.sellYn === "N") {
+        // 여기서 직접 이벤트 바인딩(클릭한번)
+        customOverlay
+          .querySelector(".custom-overlay")
+          .addEventListener("click", () => {
+            handleItemClick(item);
+          });
+        // 여기서 직접 이벤트 바인딩(더블클릭)
+        customOverlay
+          .querySelector(".custom-overlay")
+          .addEventListener("dblclick", () => {
+            handleItemClick(item);
+          });
 
-      // 여기서 직접 이벤트 바인딩(클릭한번)
-      customOverlay
-        .querySelector(".custom-overlay")
-        .addEventListener("click", () => {
-          handleItemClick(item);
-        });
-      // 여기서 직접 이벤트 바인딩(더블클릭)
-      customOverlay
-        .querySelector(".custom-overlay")
-        .addEventListener("dblclick", () => {
-          handleItemClick(item);
-        });
+        const itemMarker = new window.kakao.maps.CustomOverlay({
+          position: itemMarkerPosition,
+          content: customOverlay,
+          yAnchor: 1,
+        }); // 카카오 map에 커스텀오버레이 등록
+        itemMarker.setMap(map);
+        itemMarkersRef.current.push(itemMarker); // 새 마커 저장*/
+      } else {
+        // 여기서 직접 이벤트 바인딩(클릭한번)
+        customOverlay
+          .querySelector(".custom-overlay-sold")
+          .addEventListener("click", () => {
+            handleItemClick(item);
+          });
+        // 여기서 직접 이벤트 바인딩(더블클릭)
+        customOverlay
+          .querySelector(".custom-overlay-sold")
+          .addEventListener("dblclick", () => {
+            handleItemClick(item);
+          });
 
-      const itemMarker = new window.kakao.maps.CustomOverlay({
-        position: itemMarkerPosition,
-        content: customOverlay,
-        yAnchor: 1,
-      }); // 카카오 map에 커스텀오버레이 등록
-      itemMarker.setMap(map);
-      itemMarkersRef.current.push(itemMarker); // 새 마커 저장*/
+        const itemMarker = new window.kakao.maps.CustomOverlay({
+          position: itemMarkerPosition,
+          content: customOverlay,
+          yAnchor: 1,
+        });
+        itemMarker.setMap(map);
+        itemMarkersRef.current.push(itemMarker); // 새 마커 저장*/
+      }
     });
   };
 
@@ -886,6 +931,32 @@ const StockPageCopy = () => {
             {/* Block 1: 매매/가격/찜 */}
 
             <div className="stock-detail-info-block">
+              <div className="stock-detail-top-container">
+                <div
+                  className={`stock-sell-yn ${
+                    item.sellYn === "Y" ? "sold" : ""
+                  }`}
+                >
+                  {item.sellYn === "Y" ? "계약완료" : "계약가능"}
+                </div>
+                {member && member.memberNo !== null ? (
+                  <button
+                    onClick={() => {
+                      handleStockLike(item.stockNo);
+                    }}
+                    className="stock-detail-like-btn"
+                    aria-label="찜하기"
+                  >
+                    <Bookmark
+                      className={`like-stock-bookmark ${
+                        likeStock.has(item.stockNo) ? "active" : ""
+                      }`}
+                    />
+                  </button>
+                ) : (
+                  <div />
+                )}
+              </div>
               <div className="stock-detail-header">
                 <span className="stock-detail-type">
                   {item.stockType === 0
@@ -909,23 +980,6 @@ const StockPageCopy = () => {
                       " "
                     : "기타"}
                 </span>
-                {member && member.memberNo !== null ? (
-                  <button
-                    onClick={() => {
-                      handleStockLike(item.stockNo);
-                    }}
-                    className="stock-detail-like-btn"
-                    aria-label="찜하기"
-                  >
-                    <Bookmark
-                      className={`like-stock-bookmark ${
-                        likeStock.has(item.stockNo) ? "active" : ""
-                      }`}
-                    />
-                  </button>
-                ) : (
-                  <div />
-                )}
               </div>
               <div className="stock-detail-name">{item.stockName}</div>
               <div className="stock-detail-desc">{item.stockInfo}</div>
