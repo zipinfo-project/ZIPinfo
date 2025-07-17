@@ -28,14 +28,15 @@ export default defineConfig({
         // 요청 경로에서 /vworld 만 떼고 뒤는 그대로 전달
         rewrite: (path) => path.replace(/^\/vworld/, ""),
       },
-      // 아래처럼 따로 특정 경로를 명시해도 무방함 (필요시)
-      /*
-      "/api/announce": {
-        target: "http://localhost:8080",
+      "/publicdata": {
+        target: "https://api.data.go.kr",
         changeOrigin: true,
-        secure: false,
+        secure: true,
+        rewrite: (path) =>
+          // "/publicdata/tn_pubr…"
+          // → "/openapi/service/tn_pubr…"
+          path.replace(/^\/publicdata/, "/openapi/service"),
       },
-      */
     },
   },
 });

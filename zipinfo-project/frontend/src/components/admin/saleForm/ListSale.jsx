@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosAPI } from "../../../api/axiosApi";
 import { Link } from "react-router-dom";
-import "../../../css/admin/saleForm/listSale.css";
+import "../../../css/admin/saleForm/ListSale.css";
 
 const ListSale = () => {
   const navigate = useNavigate();
   const [saleList, setSaleList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-
+  // 슈밤
   const [adminName] = useState("관리자");
   const [adminId] = useState("user01");
 

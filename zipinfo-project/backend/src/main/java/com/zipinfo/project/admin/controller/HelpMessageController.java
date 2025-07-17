@@ -27,7 +27,7 @@ import com.zipinfo.project.member.model.dto.Member;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RestController
 @RequestMapping("/api/help")
 @RequiredArgsConstructor

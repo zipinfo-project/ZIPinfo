@@ -4,35 +4,42 @@ import { toast } from "react-toastify";
 import { axiosAPI } from "../../api/axiosApi";
 
 const Advertisement = () => {
-  // 🔒 고정된 관리자 정보
-  const [adminName] = useState("관리자");
-  const [adminId] = useState("user01");
-
   const fileInputRef = useRef(null);
-
   // 📦 광고 리스트 상태 (서버에서 불러오거나 업로드 시 추가)
   const [ads, setAds] = useState([]);
-
   // 📁 선택한 업로드 파일 상태
   const [selectedFile, setSelectedFile] = useState(null);
+
+  // 🔄 서버에서 관리자 정보 가져오기
+  const [adminInfo, setAdminInfo] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAdminInfo = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axiosAPI.get("/member/getMember");
+        setAdminInfo(response.data);
+      } catch (error) {
+        console.error("관리자 정보 불러오기 실패", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAdminInfo();
+    fetchAds();
+  }, []);
 
   // 컴포넌트 마운트 시 서버에서 광고 리스트 불러오기
   const fetchAds = async () => {
     try {
-      const resp = await axiosAPI.get(
-        "http://localhost:8080/advertisement/list"
-      );
-      // 서버에서 받아오는 데이터가 아래 형태라 가정
-      // [{ id, imageUrl, author, isMain }, ...]
+      const resp = await axiosAPI.get("/advertisement/list");
       setAds(resp.data);
     } catch (error) {
       console.error("광고 리스트 불러오기 실패", error);
     }
   };
-
-  useEffect(() => {
-    fetchAds();
-  }, []);
 
   // 📌 파일 선택 시 실행되는 이벤트 핸들러
   const handleFileChange = (e) => {
@@ -73,7 +80,6 @@ const Advertisement = () => {
       const formData = new FormData();
       formData.append("file", selectedFile);
 
-      // 서버에 이미지 파일 전송, 이미지 경로(String) 응답 받음
       const response = await axiosAPI.post(
         "http://localhost:8080/advertisement/register",
         formData,
@@ -123,6 +129,13 @@ const Advertisement = () => {
 
     fetchAds();
   };
+
+  // ✅ 관리자 정보 렌더링 조건
+  if (isLoading) return <div>로딩 중...</div>;
+  if (!adminInfo) return <div>사용자 정보를 불러올 수 없습니다.</div>;
+
+  const adminName = adminInfo.memberNickname;
+  const adminId = adminInfo.memberEmail;
 
   return (
     <div className="admin-ad-wrap">

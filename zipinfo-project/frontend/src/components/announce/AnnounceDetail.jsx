@@ -5,7 +5,7 @@ import {
   deletePost,
 } from "../../api/AnnounceApi";
 
-import "../../css/announce/AnnounceDetail.css";
+import "../../css/Announce/AnnounceDetail.css";
 import { toast } from "react-toastify";
 import { MemberContext } from "../member/MemberContext";
 

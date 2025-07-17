@@ -21,7 +21,7 @@ function Chart() {
   const mergeChartData = (signupData, withdrawData, stockData) => {
     const dataMap = new Map();
 
-    // 가입 데이터 추가
+    // 가입 데이터 추가!
     signupData.forEach((item) => {
       dataMap.set(item.CHART_DATE, {
         date: item.CHART_DATE,
@@ -30,7 +30,7 @@ function Chart() {
         stockCount: 0,
       });
     });
-
+    // 오타수정
     // 탈퇴 데이터 추가
     withdrawData.forEach((item) => {
       if (dataMap.has(item.CHART_DATE)) {

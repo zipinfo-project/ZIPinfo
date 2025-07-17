@@ -8,8 +8,8 @@ import { MemberContext } from "../components/member/MemberContext";
 const KAKAO_REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
 // const { memberStatus } = useContext(MemberContext);
 
-export const axiosApi = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8080",
+export const axiosAPI = axios.create({
+  baseURL: "http://localhost:8080",
   withCredentials: true,
   headers: { "Content-Type": "application/json" },
 });
@@ -18,7 +18,7 @@ function pushToast() {
   toast.error("다른 PC의 로그인이 감지되어 로그아웃 되었습니다.");
 }
 
-axiosApi.interceptors.request.use((config) => {
+axiosAPI.interceptors.request.use((config) => {
   //  카카오 API 요청은 바로 보내기
   if (config.url?.startsWith("https://dapi.kakao.com/")) {
     delete config.headers.Authorization;
@@ -53,7 +53,7 @@ axiosApi.interceptors.request.use((config) => {
   return config;
 });
 
-axiosApi.interceptors.response.use(
+axiosAPI.interceptors.response.use(
   (response) => response,
   (error) => {
     if (
