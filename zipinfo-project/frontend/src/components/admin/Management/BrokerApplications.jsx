@@ -61,56 +61,50 @@ const BrokerApplications = () => {
     setLoadingBrokerNumbers((prev) => ({ ...prev, [memberNumber]: true }));
 
     try {
-      // 3) 우리 백엔드에서 brokerNo 가져오기
+      // 1) 백엔드에서 brokerNo 받아오기
       const {
         data: { brokerNo },
       } = await axiosAPI.get(`${BASE_URL}/admin/management/selectBrokerNo`, {
         params: { email: memberEmail },
       });
       console.log("🔍 중개사번호:", brokerNo);
-
       if (!brokerNo) {
         setBrokerNumbers((prev) => ({ ...prev, [memberNumber]: false }));
         return;
       }
 
-      // 4) 공공데이터 호출에 필요한 파라미터 준비
-      const rawKey = import.meta.env.VITE_PUBLIC_DATA_API_KEY;
+      // 2) 공공 API 요청
       const params = {
-        ServiceKey: import.meta.env.VITE_PUBLIC_DATA_API_KEY, // 대소문자 정확히 serviceKey
+        ServiceKey: import.meta.env.VITE_PUBLIC_DATA_API_KEY,
+        type: "json",
         pageNo: 1,
         numOfRows: 1,
-        type: "json",
-        ESTBL_REG_NO: brokerNo, // 백엔드에서 받아온 원본 brokerNo
+        ESTBL_REG_NO: brokerNo,
       };
+      const apiRes = await axios.get(
+        `/api/publicdata/tn_pubr_public_med_office_api`,
+        { params }
+      );
+      console.log("✅ API 응답:", apiRes.data);
 
-      // 5) 먼저 proxy를 통해 호출 (axiosAPI는 /publicdata로 proxy 됨)
-      let apiRes;
-      try {
-        // ① 먼저 proxy
-        apiRes = await axios.get(
-          "/publicdata/openapi/service/tn_pubr_public_med_office_api",
-          { params }
-        );
-        console.log("✅ proxy OK:", apiRes.status);
-      } catch (proxyErr) {
-        console.warn("⚠️ proxy 실패, direct 호출:", proxyErr.message);
-        // ② proxy 실패 시 직접 호출
-        apiRes = await axios.get(
-          "https://api.data.go.kr/openapi/service/tn_pubr_public_med_office_api",
-          { params }
-        );
-        console.log("➡️ direct OK:", apiRes.status);
+      // 3) 헤더 + 바디 분리
+      const { response } = apiRes.data;
+      const { header, body } = response;
+
+      // 4) 존재 여부 판단
+      if (header.resultCode !== "00" || !body?.items) {
+        setBrokerNumbers((prev) => ({ ...prev, [memberNumber]: false }));
+      } else {
+        const items = body.items.item;
+        const exists = Array.isArray(items)
+          ? items.some((r) => r.ESTBL_REG_NO === brokerNo)
+          : items?.ESTBL_REG_NO === brokerNo;
+        setBrokerNumbers((prev) => ({ ...prev, [memberNumber]: exists }));
       }
-
-      const items = apiRes.data.response?.body?.items;
-      const exists = Array.isArray(items) && items.length > 0;
-      setBrokerNumbers((prev) => ({ ...prev, [memberNumber]: exists }));
     } catch (err) {
       console.error("❌ 중개사 정보 조회 에러:", err);
       setBrokerNumbers((prev) => ({ ...prev, [memberNumber]: false }));
     } finally {
-      // 8) 로딩 OFF
       setLoadingBrokerNumbers((prev) => ({ ...prev, [memberNumber]: false }));
     }
   };
@@ -277,7 +271,6 @@ const BrokerApplications = () => {
   const indexOfLast = currentPage * membersPerPage;
   const indexOfFirst = indexOfLast - membersPerPage;
   const currentApps = filteredApps.slice(indexOfFirst, indexOfLast);
-  console.log("응애");
   return (
     <div className="management-container">
       <h3 className="management-header">중개인 권한 신청 목록</h3>

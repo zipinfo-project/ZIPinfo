@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../../css/myPage/MyStock.css";
+import "../../css/myPage/myStock.css";
 import StockMenu from "./StockMenu";
 import MiniMenu from "./MiniMenu";
 import { axiosAPI } from "../../api/axiosApi";
@@ -13,7 +13,7 @@ export default function MyStock() {
   const [loading, setLoading] = useState(true);
 
   const [sellYn, setSellYn] = useState(new Set());
-
+  // 응애
   const fetchProperties = async () => {
     try {
       const response = await axiosAPI.get("/myPage/getMyStock");

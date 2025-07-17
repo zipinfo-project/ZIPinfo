@@ -12,6 +12,7 @@ import SalePage from "./components/sale/SalePage";
 import { CITY, TOWN } from "./components/common/Gonggong";
 import MemberFindPw from "./components/member/MemberFindPw";
 import "./App.css";
+import Modal from "react-modal";
 
 //import StockPageCopy from "./components/stock/StockPageCopy"; // ContextProvider 생성하는 방향으로 리팩토링 중!
 //import { StockProvider } from "./components/stock/StockContext";
@@ -70,6 +71,8 @@ import PrivacyPolicy from "./components/common/PrivacyPolicy";
 import CustomerService from "./components/common/CustomerService";
 import ScrollToTop from "./components/common/ScrollToTop";
 import { getLocationName } from "./components/common/getLocationName";
+
+Modal.setAppElement("#root");
 
 function MessageListener() {
   const { setMember } = useContext(MemberContext);

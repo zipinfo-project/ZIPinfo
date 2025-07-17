@@ -538,7 +538,7 @@ public class MyPageController {
 	
 	@PostMapping("searchResult")
 	public ResponseEntity<Object> searchResult(@RequestBody String value){
-		try {
+//		try {
 			
 			Map<String, Object> result = service.searchResult(value);
 			
@@ -546,11 +546,11 @@ public class MyPageController {
 			
 			return ResponseEntity.status(HttpStatus.OK).body(result);
 			
-			
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("불러오는 중 예외 발생 : " + e.getMessage());
-		}
+//			
+//		} catch (Exception e) {
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//					.body("불러오는 중 예외 발생 : " + e.getMessage());
+//		}
 	}
 	
 }

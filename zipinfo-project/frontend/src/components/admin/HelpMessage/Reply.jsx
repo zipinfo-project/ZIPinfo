@@ -97,7 +97,7 @@ const Reply = () => {
       }));
 
       toast.success("답변이 등록되었습니다.");
-      // navigate("/admin/helpMessage"); // 페이지 이동 제거하여 답변일 확인 가능
+      navigate("/admin/helpMessage"); // 페이지 이동 제거하여 답변일 확인 가능
     } catch (err) {
       console.error("답변 등록 오류:", err);
       toast.error("답변 등록 중 오류가 발생했습니다.");
