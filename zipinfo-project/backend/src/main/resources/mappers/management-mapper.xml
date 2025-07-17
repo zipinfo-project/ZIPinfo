@@ -181,6 +181,17 @@
   <delete id="deleteMemberBrokerInfo" parameterType="long">
     DELETE FROM BROKER_INFO WHERE MEMBER_NO = #{memberNo}
   </delete>
+  <!-- 회원 관련 HELP_MESSAGE 데이터 삭제 -->
+  <delete id="deleteMemberHelpMessage" parameterType="long">
+    DELETE FROM HELP_MESSAGE WHERE sender_no = #{memberNo} OR receiver_no = #{memberNo}
+  </delete>
+  <!-- 회원 관련 MESSAGE_FILE 데이터 삭제 -->
+  <delete id="deleteMemberMessageFiles" parameterType="long">
+      DELETE FROM MESSAGE_FILE
+      WHERE message_no IN (
+          SELECT message_no FROM HELP_MESSAGE WHERE sender_no = #{memberNo} OR receiver_no = #{memberNo}
+      )
+  </delete>
 
   <!-- 회원 영구 삭제 -->
   <delete id="permanentlyDeleteMember" parameterType="long">

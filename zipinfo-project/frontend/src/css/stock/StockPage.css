@@ -244,6 +244,19 @@
   margin-bottom: 240px;
 }
 
+.custom-overlay.custom-overlay-sold {
+  background: white;
+  border: 2px solid #767676 !important;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: center;
+  white-space: nowrap;
+  position: relative;
+  display: inline-block;
+}
+
 .custom-overlay {
   background: white;
   border: 2px solid #495cf8;
@@ -308,6 +321,16 @@
   border-style: solid;
   border-color: #495cf8 transparent transparent transparent;
 }
+.custom-overlay.custom-overlay-sold::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 10px 6px 0;
+  border-style: solid;
+  border-color: #767676 transparent transparent transparent;
+}
 
 .custom-overlay-sold::after {
   content: "";
@@ -338,6 +361,13 @@
   padding: 4px 8px;
   border-radius: 6px 6px 0 0;
 }
+.custom-overlay.custom-overlay-sold .area {
+  background: #767676;
+  color: white;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px 6px 0 0;
+}
 
 .custom-overlay-sold .soldArea {
   background: #7676;
@@ -356,6 +386,15 @@
   border-radius: 6px 6px 0 0;
 }
 
+.custom-overlay.custom-overlay-sold .label {
+  color: #767676 !important;
+  padding: 4px 8px;
+  display: flex;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  gap: 4px;
+}
 .custom-overlay .label {
   color: #495cf8;
   padding: 4px 8px;
