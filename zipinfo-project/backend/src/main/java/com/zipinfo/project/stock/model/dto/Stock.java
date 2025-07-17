@@ -49,4 +49,6 @@ public class Stock {
     private String presidentName;//대표명
     private String brokerNo; // 중개등록번호
     private String presidentPhone; // 대표번호
+    
+    private String sellDate; //안팔렸으면 null, 팔렸으면 값 추가.
 }

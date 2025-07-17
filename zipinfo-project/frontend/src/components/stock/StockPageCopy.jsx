@@ -652,8 +652,12 @@ const StockPageCopy = () => {
 
       // /********************end of 겹침처리****************************************************************** */
 
-      const content = `
-      <div class="custom-overlay" >
+      const content = `<div class=${
+        item.sellDate != null
+          ? "custom-overlay custom-overlay-sold "
+          : "custom-overlay"
+      }>
+      
         <div class="area">${item.exclusiveArea}㎡</div>
         ${
           item.stockType === 0
