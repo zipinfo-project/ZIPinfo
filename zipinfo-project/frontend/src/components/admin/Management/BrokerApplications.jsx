@@ -156,6 +156,9 @@ const BrokerApplications = () => {
           : app
       );
       setApplications(updated);
+      if (newRoleStr === "중개인") {
+        toast.success("중개인으로 권한이 변경되었습니다!");
+      }
     } catch (error) {
       toast.error("회원 권한 변경에 실패하였습니다.");
     }
@@ -177,6 +180,7 @@ const BrokerApplications = () => {
           : app
       );
       setApplications(updated);
+      toast.success("중개인 신청이 거절되었습니다.");
     } catch (error) {
       toast.error("거절 처리 실패. 다시 한번 시도해주세요.");
     }
