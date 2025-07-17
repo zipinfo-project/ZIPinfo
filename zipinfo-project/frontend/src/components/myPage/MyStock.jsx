@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "../../css/myPage/myStock.css";
 import StockMenu from "./StockMenu";
 import MiniMenu from "./MiniMenu";
-import { axiosAPI } from "../../api/axiosApi";
+import { axiosAPI } from "../../api/axiosAPI";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
