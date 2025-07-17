@@ -6,6 +6,7 @@ import agent from "../../assets/agent-icon.svg"; // 중개사 아이콘
 import warning from "../../assets/circle_warning.svg"; // 미검색 결과 아이콘
 import { useStockContext } from "./StockContext";
 import InfraMark from "./infraMark";
+import StockImgModal from "./StockImgModal";
 import { Bookmark } from "lucide-react";
 import { MemberContext } from "../member/MemberContext";
 import {
@@ -483,7 +484,7 @@ const StockPageCopy = () => {
             <div class="tip-form-title">${formLabel[f]}</div>
             <div class="tip-line">
               ${stockTypeLabel[currentType]}&nbsp;
-              <strong>${priceConvertToString(val)}${
+              <strong class="tip-price">${priceConvertToString(val)}${
                 currentType === 2 && month
                   ? `/${priceConvertToString(month)}`
                   : ""
@@ -872,24 +873,7 @@ const StockPageCopy = () => {
 
             <div className="stock-detail-panel">
               <div className="stock-detail-images">
-                {item?.imgUrls && (
-                  <>
-                    <img
-                      src={`http://localhost:8080${item.imgUrls[0]}`} //?v=${Date.now()}	--> 현재 시간을 이용해 URL을 고유하게 만들어 브라우저 캐시를 우회
-                      alt="상세1"
-                      className="stock-detail-mainimg"
-                      onLoad={() => setIsImg0Loaded(true)}
-                    />
-                    <img
-                      src={
-                        item?.imgUrls
-                          ? `http://localhost:8080${item.imgUrls[2]}`
-                          : ""
-                      }
-                      onLoad={() => setIsImg2Loaded(true)}
-                    />
-                  </>
-                )}
+                <StockImgModal item={item} />
               </div>
             </div>
 

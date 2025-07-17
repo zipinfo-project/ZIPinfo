@@ -221,7 +221,7 @@ const Main = () => {
     return stockList.map((item, index) => (
       <div className="card" key={item.stockNo}>
         <img
-          src={`${import.meta.env.VITE_API_BASE_URL}${item.imgUrl}`}
+          src={`http://localhost:8080${item.imgUrl}`}
           alt="실거래 집 썸네일 이미지"
           onClick={() => {
             navigate(`/stock/${item.stockNo}`, {
@@ -296,7 +296,8 @@ const Main = () => {
     ];
 
     return uniqueList.slice(0, 4).map((item) => {
-      const imgUrl = `${import.meta.env.VITE_API_BASE_URL}${item.saleImgUrl}`;
+      const imgUrl = `http://localhost:8080${item.saleImgUrl}`;
+
       return (
         <div
           className="card-sale"
@@ -569,7 +570,7 @@ const Main = () => {
       {mainAd && mainAd.adImgUrl !== null ? (
         <div className="banner">
           <img
-            src={`${import.meta.env.VITE_API_BASE_URL}${mainAd.adImgUrl}`}
+            src={`http://localhost:8080${mainAd.adImgUrl}`}
             alt="배너광고 이미지"
           />
         </div>

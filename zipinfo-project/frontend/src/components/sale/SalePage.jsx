@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { axiosAPI } from "../../api/axiosApi";
-import "../../css/sale/salePage.css";
+import "../../css/sale/SalePage.css";
 import SearchBar from "../common/SearchBar";
 import warning from "../../assets/circle_warning.svg";
 

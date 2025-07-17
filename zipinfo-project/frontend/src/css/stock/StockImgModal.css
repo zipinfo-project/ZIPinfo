@@ -1,0 +1,96 @@
+.thumb-list img.thumb {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-right: 4px;
+}
+
+.modal-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 36%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: 0;
+  /* border-radius: 50%; */
+  color: #fff;
+  cursor: pointer;
+  background-color: black;
+}
+
+.modal-arrow {
+  font-size: 40px;
+}
+
+.modal-nav.left {
+  left: -70px;
+}
+.modal-nav.right {
+  right: -70px;
+}
+
+.slide-box {
+  width: 50vw; /* 뷰포트 90 %   */
+  height: 60vh; /* 뷰포트 80 %   */
+  overflow: hidden;
+  position: relative;
+  background-color: black;
+}
+
+.slide-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.4s ease; /* ← 부드러운 슬라이드 핵심 */
+}
+
+.slide-img {
+  flex: 0 0 100%; /* 한 장씩 꽉 차게 */
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.slide-img-mini {
+  flex: 0 0 100%; /* 한 장씩 꽉 차게 */
+  object-fit: contain;
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
+
+  transition: width 0.25s ease, height 0.25s ease, border 0.25s ease,
+    transform 0.25s ease;
+}
+
+.modal-img-list {
+  margin-top: 70px;
+  margin-bottom: -80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+}
+
+.modal-img {
+  margin-right: 10px;
+}
+
+.modal-img :hover {
+  border: 3px solid #495cf8;
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+}
+
+.modal-img-span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 20px;
+  padding: 50px;
+  margin-top: -200px;
+}

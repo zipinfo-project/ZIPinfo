@@ -48,7 +48,7 @@ const Management = () => {
 
     if (activeTab === "members") {
       axiosAPI
-        .get("/admin/management/members", {
+        .get("http://localhost:8080/admin/management/members", {
           withCredentials: true,
         })
         .then((res) => {
@@ -62,7 +62,7 @@ const Management = () => {
         .finally(() => setLoading(false));
     } else if (activeTab === "deleted") {
       axiosAPI
-        .get("/admin/management/members/deleted")
+        .get("http://localhost:8080/admin/management/members/deleted")
         .then((res) => {
           console.log("[then] 삭제된 회원 목록 응답:", res);
           handleResponse(
@@ -78,7 +78,7 @@ const Management = () => {
         .finally(() => setLoading(false));
     } else if (activeTab === "applications") {
       axiosAPI
-        .get("/admin/management/broker-applications")
+        .get("http://localhost:8080/admin/management/broker-applications")
         .then((res) => {
           console.log("[then] 중개인 권한 신청 목록 응답:", res);
           handleResponse(
@@ -95,7 +95,7 @@ const Management = () => {
     } else if (activeTab === "deletedBoards") {
       // ✅ 추가된 조건
       axiosAPI
-        .get("/admin/management/boards/deleted")
+        .get("http://localhost:8080/admin/management/boards/deleted")
         .then((res) => {
           console.log("[then] 삭제된 게시글 목록 응답:", res);
           handleResponse(
