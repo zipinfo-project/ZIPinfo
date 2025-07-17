@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../css/myPage/myInfo.css";
 import "../../css/myPage/menu.css";
 import { useNavigate } from "react-router-dom";
-import { axiosAPI } from "../../api/axiosAPI";
+import { axiosAPI } from "../../api/axiosApi";
 import Menu from "./Menu";
 import { CITY, TOWN } from "../common/Gonggong";
 
