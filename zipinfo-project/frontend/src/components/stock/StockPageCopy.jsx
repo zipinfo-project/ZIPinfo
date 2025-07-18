@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react"; // useRef 추가
+import { useContext, useEffect, useMemo, useRef, useState } from "react"; // useRef 추가
 import { axiosAPI } from "../../api/axiosAPI";
 import "../../css/stock/StockPage.css";
 import SearchBar from "../common/SearchBar";
@@ -1213,6 +1213,10 @@ const StockPageCopy = () => {
       </section>
     );
   };
+
+  const memoizedStockList = useMemo(() => {
+    return <StockList stockList={stockList} />;
+  }, [stockList]);
   /************주소의 stock/:stockNo에 따라 detail창 보여주지 말지 결정. */
   /*useEffect(() => {
     console.log("stockNo : ", stockNo);
@@ -1254,9 +1258,7 @@ const StockPageCopy = () => {
       {/**showSearchType : 현재 페이지가 StockPage인가, SalePage인가 따지는 변수 */}
       {/**list */}
       <div className="container">
-        <aside className="side-panel">
-          <StockList stockList={stockList} />
-        </aside>
+        <aside className="side-panel">{memoizedStockList}</aside>
 
         {/**detail */}
         {isAsideVisible && (

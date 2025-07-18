@@ -150,14 +150,19 @@ const BrokerApplications = () => {
         null,
         { params: { authId: newRole } }
       );
-      const updated = applications.map((app) =>
-        app.memberNumber === memberNumber
-          ? { ...app, memberRole: newRole }
-          : app
+
+      // 권한 변경 후 서버에서 최신 데이터를 다시 조회
+      const response = await axiosAPI.get(
+        `${BASE_URL}/admin/management/broker-applications`
       );
-      setApplications(updated);
+      const data = response?.data || [];
+      setApplications(data);
+      setFilteredApps(data);
+
       if (newRoleStr === "중개인") {
         toast.success("중개인으로 권한이 변경되었습니다!");
+      } else if (newRoleStr === "일반회원") {
+        toast.success("일반회원으로 권한이 변경되었습니다!");
       }
     } catch (error) {
       toast.error("회원 권한 변경에 실패하였습니다.");
@@ -174,12 +179,15 @@ const BrokerApplications = () => {
         null,
         { params: { authId: 1 } }
       );
-      const updated = applications.map((app) =>
-        app.memberNumber === memberNumber
-          ? { ...app, applicationStatus: "거절됨", memberRole: 1 }
-          : app
+
+      // 거절 처리 후 서버에서 최신 데이터를 다시 조회
+      const response = await axiosAPI.get(
+        `${BASE_URL}/admin/management/broker-applications`
       );
-      setApplications(updated);
+      const data = response?.data || [];
+      setApplications(data);
+      setFilteredApps(data);
+
       toast.success("중개인 신청이 거절되었습니다.");
     } catch (error) {
       toast.error("거절 처리 실패. 다시 한번 시도해주세요.");

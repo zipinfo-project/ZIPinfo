@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.CopyOnWriteArrayList;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @Slf4j
 @RestController
@@ -35,15 +36,10 @@ public class AdvertisementController {
      * 파일 저장 + 메모리 리스트에 광고 추가 (DB 저장 없음)
      */
     @PostMapping("/register")
-    public ResponseEntity<Object> registerAd(HttpSession session, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Object> registerAd(@AuthenticationPrincipal Member loginMember, @RequestParam("file") MultipartFile file) {
         try {
-        	
-			Member loginMember = (Member)session.getAttribute("loginMember");
-			
-			int memberNo = loginMember.getMemberNo();
-			
+            int memberNo = loginMember.getMemberNo();
             int result = advertisementService.saveFile(file, memberNo);
-
             return ResponseEntity.status(HttpStatus.OK).body(result);
         } catch (Exception e) {
             e.printStackTrace();
