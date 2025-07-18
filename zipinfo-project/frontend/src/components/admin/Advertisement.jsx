@@ -83,7 +83,10 @@ const Advertisement = () => {
       const response = await axiosAPI.post(
         "http://localhost:8080/advertisement/register",
         formData,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: { "Content-Type": undefined }, // 이 줄이 반드시 있어야 함!
+        }
       );
 
       if (response.status === 200) {
@@ -132,7 +135,8 @@ const Advertisement = () => {
 
   // ✅ 관리자 정보 렌더링 조건
   if (isLoading) return <div>로딩 중...</div>;
-  if (!adminInfo) return <div>사용자 정보를 불러올 수 없습니다.</div>;
+  if (!adminInfo)
+    return <div>사용자 정보를 불러올 수 없습니다. 로그인을 해주세요.</div>;
 
   const adminName = adminInfo.memberNickname;
   const adminId = adminInfo.memberEmail;

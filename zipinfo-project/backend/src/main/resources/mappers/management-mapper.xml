@@ -233,6 +233,10 @@
   	WHERE MEMBER_NO = #{memberNo}
   </select>
 
+<delete id="deleteMemberLikeStock" parameterType="long">
+  DELETE FROM LIKE_STOCK WHERE MEMBER_NO = #{memberNo}
+</delete>
+
 
   <!-- 회원 영구 삭제 -->
   <delete id="permanentlyDeleteMember" parameterType="long">
