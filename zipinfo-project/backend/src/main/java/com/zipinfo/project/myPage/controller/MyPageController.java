@@ -522,8 +522,12 @@ public class MyPageController {
 	}
 	
 	@PostMapping("addSawStock")
-	public ResponseEntity<Object> addSawStock(@RequestBody Stock stock){
+	public ResponseEntity<Object> addSawStock(@AuthenticationPrincipal Member loginMember, @RequestBody Stock stock){
 		try {
+			
+			int memberNo = loginMember.getMemberNo();
+			
+			stock.setMemberNo(memberNo);
 			
 			int result = service.addSawStock(stock);
 			
