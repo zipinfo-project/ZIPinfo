@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import "../../css/common/SearchBar.css";
-import { axiosAPI } from "../../api/axiosAPI";
+import { axiosAPI } from "../../api/axiosApi";
 import arrowDown from "../../assets/arrow-down.svg";
 import refresh from "../../assets/refresh.svg";
 import search from "../../assets/search-icon.svg";

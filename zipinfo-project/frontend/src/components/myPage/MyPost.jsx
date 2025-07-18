@@ -3,7 +3,7 @@ import "../../css/myPage/myPost.css";
 import "../../css/myPage/menu.css";
 import Menu from "./Menu";
 import { useLocation, useNavigate } from "react-router-dom";
-import { axiosAPI } from "../../api/axiosAPI";
+import { axiosAPI } from "../../api/axiosApi";
 
 const MyPost = () => {
   const nav = useNavigate();

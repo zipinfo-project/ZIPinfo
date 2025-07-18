@@ -233,6 +233,12 @@
   align-items: center;
 }
 
+.no-like-stock h1 {
+  font-size: 16px;
+  margin: 80px 0;
+  font-weight: 400;
+}
+
 .like-stock-bookmark {
   color: #dbdbdb;
 }

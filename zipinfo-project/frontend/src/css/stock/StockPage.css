@@ -150,6 +150,30 @@
   cursor: pointer;
 }
 
+.stock-page-sell-yn {
+  display: flex;
+  justify-content: center;
+  width: 56px;
+  height: 20px;
+  border: 1px solid #495cf8;
+  color: white;
+  background-color: #495cf8;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.stock-page-sell-yn.sold {
+  display: flex;
+  justify-content: center;
+  width: 56px;
+  height: 20px;
+  border: 1px solid #495cf8;
+  color: #495cf8;
+  background-color: white;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
 .stock-detail-header {
   display: flex;
   align-items: center;
@@ -175,6 +199,10 @@
   font-size: 24px;
   color: #bbb;
   cursor: pointer;
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  z-index: 10;
 }
 
 .stock-detail-like-btn:hover {
@@ -441,6 +469,7 @@
 
 .stock-detail-info-block {
   padding: 24px;
+  position: relative;
 }
 
 .stock-around-info-btn {
@@ -542,5 +571,4 @@
 .stock-detail-top-container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }

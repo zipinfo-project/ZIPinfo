@@ -1,3 +1,4 @@
+
 import { memo, useContext, useEffect, useMemo, useRef, useState } from "react"; // useRef 추가
 import { axiosAPI } from "../../api/axiosAPI";
 import "../../css/stock/StockPage.css";
@@ -931,7 +932,7 @@ const StockPageCopy = () => {
             <div className="stock-detail-info-block">
               <div className="stock-detail-top-container">
                 <div
-                  className={`stock-sell-yn ${
+                  className={`stock-page-sell-yn ${
                     item.sellYn === "Y" ? "sold" : ""
                   }`}
                 >

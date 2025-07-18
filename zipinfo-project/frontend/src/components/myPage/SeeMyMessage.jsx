@@ -4,7 +4,7 @@ import "../../css/myPage/menu.css";
 import StockMenu from "./StockMenu";
 import MessageMenu from "./MessageMenu";
 import { useLocation, useNavigate } from "react-router-dom";
-import { axiosAPI } from "../../api/axiosAPI";
+import { axiosAPI } from "../../api/axiosApi";
 import { Check, X } from "lucide-react";
 
 const MyPost = () => {

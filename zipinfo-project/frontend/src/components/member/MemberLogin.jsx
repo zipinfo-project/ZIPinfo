@@ -1,5 +1,5 @@
 import React, { memo, useContext, useEffect, useState } from "react";
-import { axiosAPI } from "../../api/axiosAPI";
+import { axiosAPI } from "../../api/axiosApi";
 import "../../css/member/MemberLogin.css";
 import { MemberContext } from "../member/MemberContext";
 import NaverCallback from "../auth/NaverCallback";

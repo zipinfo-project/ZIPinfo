@@ -82,19 +82,21 @@
 
 .my-page-valid-msg {
   font-size: 12px;
-  margin-top: -20px;
+  margin-top: -56px;
   color: green;
+  margin-bottom: 40px;
 }
 
 .my-page-invalid-msg {
   font-size: 12px;
-  margin-top: -20px;
+  margin-top: -56px;
   color: red;
+  margin-bottom: 40px;
 }
 
 .my-page-default-msg {
   font-size: 12px;
-  margin-top: -20px;
+  margin-top: -56px;
   color: gray;
   margin-bottom: 40px;
 }

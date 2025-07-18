@@ -8,7 +8,7 @@ import {
   AreaChart,
   Area,
 } from "recharts";
-import { axiosAPI } from "../../api/axiosAPI";
+import { axiosAPI } from "../../api/axiosApi";
 import { toast } from "react-toastify";
 import refresh from "../../assets/refresh.svg";
 
