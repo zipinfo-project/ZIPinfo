@@ -9,21 +9,35 @@ const ListSale = () => {
   const [saleList, setSaleList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  // 슈밤
-  const [adminName] = useState("관리자");
-  const [adminId] = useState("user01");
+
+  // 관리자 계정
+  const [adminName, setAdminName] = useState("");
+  const [adminId, setAdminId] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAdminInfo = async () => {
+      try {
+        const res = await axiosAPI.get("/member/getMember", {
+          withCredentials: true,
+        });
+        setAdminName(res.data.memberNickname);
+        setAdminId(res.data.memberEmail);
+      } catch (err) {
+        console.error("관리자 정보 불러오기 실패", err);
+      }
+    };
+
+    const fetchSaleList = async () => {
       try {
         const response = await axiosAPI.get("/admin/selectSaleList");
-        setSaleList(response.data); // 전체 리스트 그대로 저장
+        setSaleList(response.data);
       } catch (error) {
         console.error("매물 목록 불러오기 실패:", error);
       }
     };
 
-    fetchData();
+    fetchAdminInfo();
+    fetchSaleList();
   }, []);
 
   const handleDelete = async (id) => {
