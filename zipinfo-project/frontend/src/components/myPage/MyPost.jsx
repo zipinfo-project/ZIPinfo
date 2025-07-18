@@ -85,7 +85,6 @@ const MyPost = () => {
               ) : (
                 currentPosts.map((item, index) => (
                   <tr key={index} className="nb-row">
-                    <td className="nb-cell-number">{item.boardNo}</td>
                     <td className="nb-cell-subject">
                       {item.boardSubject === "Q"
                         ? "질문답변"

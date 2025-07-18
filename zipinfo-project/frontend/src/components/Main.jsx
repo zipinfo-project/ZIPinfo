@@ -79,7 +79,7 @@ const Main = () => {
     );
   };
 
-  const handleClickStock = (stock) => {
+  const handleClickStock = async (stock) => {
     let history = JSON.parse(localStorage.getItem("recentSearch")) || [];
 
     // stockNo 기준으로 중복 제거
@@ -118,6 +118,11 @@ const Main = () => {
 
     // 다시 저장
     localStorage.setItem("recentSearch", JSON.stringify(history));
+
+    const resp = await axiosAPI.post("/myPage/addSawStock", {
+      memberNo: stock.memberNo,
+      stockNo: stock.stockNo,
+    });
 
     stock.stockNo
       ? navigate(`/stock/${stock.stockNo}`, {

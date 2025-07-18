@@ -172,4 +172,7 @@ public interface ManagementMapper {
 	int deleteBoardLike(Long boardNo);
 
 	int deleteComment(Long boardNo);
+	
+	int deleteMemberLikeStock(@Param("memberNo") long memberNo);
+
 }
