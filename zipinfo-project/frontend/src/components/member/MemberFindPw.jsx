@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../../css/member/MemberFindPw.css";
-import { axiosAPI } from "../../api/axiosAPI";
+import { axiosAPI } from "../../api/axiosApi";
 
 export default function MemberFindPw() {
   const navigate = useNavigate();
@@ -544,7 +544,7 @@ export default function MemberFindPw() {
               value={emailFormData.memberEmail}
               onChange={handleEmailInputChange}
               placeholder="가입하신 이메일을 입력해주세요"
-              maxLength={50} 
+              maxLength={50}
               className="find-pw-form-input"
               required
             />

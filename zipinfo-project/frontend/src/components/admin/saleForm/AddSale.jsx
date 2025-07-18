@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { axiosAPI } from "../../../api/axiosAPI";
+import { axiosAPI } from "../../../api/axiosApi";
 import "../../../css/admin/saleForm/AddSale.css";
 import { useNavigate } from "react-router-dom";
 

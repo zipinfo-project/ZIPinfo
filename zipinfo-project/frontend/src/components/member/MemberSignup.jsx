@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { axiosAPI } from "../../api/axiosAPI";
+import { axiosAPI } from "../../api/axiosApi";
 import "../../css/member/MemberSignup.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -428,7 +428,7 @@ export default function MemberSignUp() {
     }
 
     // 2) 형식 검사
-    const regExp = /^[가-힣]\d{3,5}-\d{2,4}-\d{1,5}$/;
+    const regExp = /\d{3,5}-\d{2,4}-\d{1,5}$/;
     if (!regExp.test(inputBrokerNo)) {
       updateMessage(
         "brokerNoMessage",

@@ -12,7 +12,7 @@ import deleteBtn from "../assets/delete-icon.svg";
 
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { axiosAPI } from "../api/axiosAPI";
+import { axiosAPI } from "../api/axiosApi";
 
 import { formatPrice } from "../components/common/priceConvert";
 import { convertToJSDate, getTimeAgo } from "../components/common/dateConvert";

@@ -3,7 +3,7 @@ import "../../css/myPage/myMessage.css";
 import StockMenu from "./StockMenu";
 import MessageMenu from "./MessageMenu";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { axiosAPI } from "../../api/axiosAPI";
+import { axiosAPI } from "../../api/axiosApi";
 import { Plus } from "lucide-react";
 
 export default function MyStock() {

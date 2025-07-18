@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "../../css/myPage/myInfo.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import Menu from "./Menu";
-import { axiosAPI } from "../../api/axiosAPI";
+import { axiosAPI } from "../../api/axiosApi";
 import MemberLocationFilter from "../member/MemberLocationFilter";
 import { CITY, TOWN } from "../common/Gonggong";
 import { toast } from "react-toastify";
@@ -525,7 +525,19 @@ const UpdateInfo = () => {
               className="my-page-input"
             />
           </div>
-          <span className="my-page-nick-info">{testNickname}</span>
+          <span
+            className={
+              testNickname === "사용 가능한 닉네임입니다."
+                ? "my-page-valid-msg"
+                : testNickname === "일치하는 닉네임이 존재합니다." ||
+                  testNickname ===
+                    "닉네임을 2글자 이상 8글자 이내로 작성해주세요"
+                ? "my-page-invalid-msg"
+                : "my-page-default-msg"
+            }
+          >
+            {testNickname}
+          </span>
 
           <div className="my-page-info-field">
             <label className="my-page-info-label">선호 지역</label>

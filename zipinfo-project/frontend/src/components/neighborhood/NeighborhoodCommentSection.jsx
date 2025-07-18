@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { MemberContext } from "../member/MemberContext";
-import { axiosAPI } from "../../api/axiosAPI";
+import { axiosAPI } from "../../api/axiosApi";
 import "../../css/neighborhood/NeighborhoodBoardComment.css";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
