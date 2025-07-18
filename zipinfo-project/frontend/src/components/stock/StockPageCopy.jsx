@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useRef, useState } from "react"; // useRef 추가
+import { memo, useContext, useEffect, useMemo, useRef, useState } from "react"; // useRef 추가
 import { axiosAPI } from "../../api/axiosAPI";
 import "../../css/stock/StockPage.css";
 import SearchBar from "../common/SearchBar";
@@ -790,6 +790,7 @@ const StockPageCopy = () => {
 
   // 매물 item을 클릭했을떄 수행되는 핸들러 함수
   const handleItemClick = async (item) => {
+    if (clickedStockItem?.stockNo === item.stockNo) return;
     setClickedStockItem(item); // 클릭한 item의 index를 저장.
     setIsAsideVisible(true); //클릭시 상세창 표시=true 함.
 
@@ -888,10 +889,7 @@ const StockPageCopy = () => {
   }, [stockNo]);
   //updateMarker() 뒤에 queryString 조건에 따라 화면전환하는 useEffect() 사용
 
-  const StockItemDetail = ({ item }) => {
-    const [isImg0Loaded, setIsImg0Loaded] = useState(false);
-    const [isImg1Loaded, setIsImg1Loaded] = useState(false);
-    const [isImg2Loaded, setIsImg2Loaded] = useState(false);
+  const StockItemDetail = memo(({ item }) => {
     if (item) {
       //null 오류 방지
 
@@ -1123,7 +1121,7 @@ const StockPageCopy = () => {
         </>
       );
     }
-  };
+  });
   const StockList = ({ stockList }) => {
     const typeMap = {
       1: "아파트 ",
