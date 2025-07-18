@@ -35,6 +35,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
 /* 드롭다운(권한 선택) 스타일 */
 .member-role-select {
   padding: 8px 14px;
