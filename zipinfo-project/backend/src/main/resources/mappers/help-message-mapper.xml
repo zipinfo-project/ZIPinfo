@@ -86,7 +86,7 @@
     LEFT JOIN MEMBER admin ON hm.RECEIVER_NO = admin.MEMBER_NO
     WHERE hm.REPLY_YN = 'N'
       AND hm.SENDER_NO != #{adminId}
-    ORDER BY hm.REPLY_DATE DESC
+    ORDER BY hm.MESSAGE_WRITE_DATE DESC
   </select>
 
   <!-- 관리자 답변 완료 목록 조회 -->

@@ -19,6 +19,7 @@ const Advertisement = () => {
       try {
         setIsLoading(true);
         const response = await axiosAPI.get("/member/getMember");
+        console.log("광고 등록 adminInfo 응답:", response.data);
         setAdminInfo(response.data);
       } catch (error) {
         console.error("관리자 정보 불러오기 실패", error);
@@ -85,7 +86,7 @@ const Advertisement = () => {
         formData,
         {
           withCredentials: true,
-          headers: { "Content-Type": undefined }, // 이 줄이 반드시 있어야 함!
+          headers: { "Content-Type": undefined }, // 반드시 있어야 함
         }
       );
 
@@ -97,7 +98,7 @@ const Advertisement = () => {
       toast.success(
         <div>
           <div className="toast-success-title">광고 등록 성공 알림!</div>
-          <div className="toast-success-body">광고가 등록되었습니다..</div>
+          <div className="toast-success-body">광고가 등록되었습니다.</div>
         </div>
       );
     } catch (error) {
@@ -113,50 +114,57 @@ const Advertisement = () => {
 
   // ✅ 광고 메인 등록/해제 토글
   const handleToggleMain = async (adNo) => {
-    const response = await axiosAPI.post(
-      "http://localhost:8080/advertisement/updateMain",
-      { adNo: parseInt(adNo) },
-      { withCredentials: true }
-    );
-
-    fetchAds();
+    try {
+      await axiosAPI.post(
+        "http://localhost:8080/advertisement/updateMain",
+        { adNo: parseInt(adNo) },
+        { withCredentials: true }
+      );
+      fetchAds();
+    } catch (error) {
+      console.error("메인 등록 토글 실패", error);
+      toast.error("메인 등록 상태 변경에 실패했습니다.");
+    }
   };
 
-  // ✅ 광고 삭제 (클라이언트 상태에서만 삭제)
+  // ✅ 광고 삭제
   const handleDelete = async (adNo) => {
-    const response = await axiosAPI.post(
-      "http://localhost:8080/advertisement/delete",
-      { adNo: parseInt(adNo) },
-      { withCredentials: true }
-    );
-
-    fetchAds();
+    try {
+      await axiosAPI.post(
+        "http://localhost:8080/advertisement/delete",
+        { adNo: parseInt(adNo) },
+        { withCredentials: true }
+      );
+      fetchAds();
+    } catch (error) {
+      console.error("광고 삭제 실패", error);
+      toast.error("광고 삭제에 실패했습니다.");
+    }
   };
 
-  // ✅ 관리자 정보 렌더링 조건
+  // 로딩 중일 때
   if (isLoading) return <div>로딩 중...</div>;
-  if (!adminInfo)
-    return <div>사용자 정보를 불러올 수 없습니다. 로그인을 해주세요.</div>;
-
-  const adminName = adminInfo.memberNickname;
-  const adminId = adminInfo.memberEmail;
 
   return (
     <div className="admin-ad-wrap">
       <h1 className="admin-ad-title">광고 등록 관리</h1>
 
-      {/* 👤 관리자 정보 표시 */}
-      <div className="admin-ad-info">
-        <p>
-          현재 <span className="admin-ad-name">{adminName}</span> 으로
-          접속중입니다.
-        </p>
-        <p>
-          접속 ID : <span className="admin-ad-id">{adminId}</span>
-        </p>
-      </div>
+      {/* 관리자 정보가 있을 때만 표시 */}
+      {adminInfo && (
+        <div className="admin-ad-info">
+          <p>
+            현재{" "}
+            <span className="admin-ad-name">{adminInfo.memberNickname}</span>{" "}
+            으로 접속중입니다.
+          </p>
+          <p>
+            접속 ID :{" "}
+            <span className="admin-ad-id">{adminInfo.memberEmail}</span>
+          </p>
+        </div>
+      )}
 
-      {/* 📋 광고 목록 테이블 */}
+      {/* 광고 목록 테이블 (항상 노출) */}
       <div className="admin-ad-table-box">
         <table className="admin-ad-table">
           <thead>
@@ -169,64 +177,70 @@ const Advertisement = () => {
             </tr>
           </thead>
           <tbody>
-            {ads.length === 0 && (
+            {ads.length === 0 ? (
               <tr>
                 <td colSpan="5" className="admin-ad-empty">
                   등록된 광고가 없습니다.
                 </td>
               </tr>
+            ) : (
+              ads.map((ad, index) => (
+                <tr key={ad.id}>
+                  <td>{index + 1}</td>
+                  <td>
+                    <img
+                      src={`http://localhost:8080${ad.adImgUrl}`}
+                      alt={`광고 이미지 ${index + 1}`}
+                      style={{ width: "100px", height: "auto" }}
+                    />
+                  </td>
+                  <td>{ad.memberNickname}</td>
+                  <td>
+                    <button
+                      className={`admin-ad-btn ${
+                        ad.adMain ? "admin-ad-green" : "admin-ad-blue"
+                      }`}
+                      onClick={() => handleToggleMain(ad.adNo)}
+                      disabled={!adminInfo} // 비로그인 시 버튼 비활성화
+                    >
+                      {ad.adMain ? "등록됨" : "등록"}
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      className="admin-ad-btn admin-ad-red"
+                      onClick={() => handleDelete(ad.adNo)}
+                      disabled={!adminInfo} // 비로그인 시 버튼 비활성화
+                    >
+                      삭제
+                    </button>
+                  </td>
+                </tr>
+              ))
             )}
-            {ads.map((ad, index) => (
-              <tr key={ad.id}>
-                <td>{index + 1}</td>
-                <td>
-                  <img
-                    src={`http://localhost:8080${ad.adImgUrl}`} // ✅ 절대 경로로 변경
-                    alt={`광고 이미지 ${index + 1}`}
-                    style={{ width: "100px", height: "auto" }}
-                  />
-                </td>
-                <td>{ad.memberNickname}</td>
-                <td>
-                  <button
-                    className={`admin-ad-btn ${
-                      ad.adMain ? "admin-ad-green" : "admin-ad-blue"
-                    }`}
-                    onClick={() => handleToggleMain(ad.adNo)}
-                  >
-                    {ad.adMain ? "등록됨" : "등록"}
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="admin-ad-btn admin-ad-red"
-                    onClick={() => handleDelete(ad.adNo)}
-                  >
-                    삭제
-                  </button>
-                </td>
-              </tr>
-            ))}
           </tbody>
         </table>
       </div>
 
-      {/* 📤 이미지 업로드 영역 */}
-      <div className="admin-ad-upload">
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-        />
-      </div>
+      {/* 광고 업로드 영역: 관리자 로그인 시에만 표시 */}
+      {adminInfo && (
+        <>
+          <div className="admin-ad-upload">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+          </div>
 
-      {/* 🔘 업로드 버튼 */}
-      <div className="admin-ad-action">
-        <button className="admin-ad-add" onClick={handleAdUpload}>
-          이미지 업로드
-        </button>
-      </div>
+          <div className="admin-ad-action">
+            <button className="admin-ad-add" onClick={handleAdUpload}>
+              이미지 업로드
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
